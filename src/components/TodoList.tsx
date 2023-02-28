@@ -8,7 +8,10 @@ export default function TodoList() {
     <>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id}>{todo.text}</li>
+          <li key={todo.id}>
+            <span>{todo.status}</span>
+            <span>{todo.text}</span>
+          </li>
         ))}
       </ul>
     </>

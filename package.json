@@ -44,8 +44,10 @@
     "whatwg-fetch": "^3.6.2"
   },
   "lint-staged": {
-    "*.{ts,tsx}": "eslint --cache --fix",
-    "*.{test.ts, test.tsx}": "vitest related --run",
+    "*.{ts,tsx}": [
+      "eslint --cache --fix",
+      "vitest --run"
+    ],
     "*.{js,ts,tsx,css,md}": "prettier --write"
   }
 }
