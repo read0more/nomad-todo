@@ -1,7 +1,14 @@
 import React from 'react';
+import TodoForm from './components/TodoForm';
+import TodoList from './components/TodoList';
 
 function App() {
-  return <div className='App'>Hello World!</div>;
+  return (
+    <>
+      <TodoForm />
+      <TodoList />
+    </>
+  );
 }
 
 export default App;
