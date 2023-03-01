@@ -1,5 +1,5 @@
 import React from 'react';
-import { todoStatusState } from '../recoil/atoms';
+import { statusesState } from '../recoil/atoms';
 import { useSetRecoilState } from 'recoil';
 import { useForm } from 'react-hook-form';
 
@@ -8,7 +8,7 @@ interface Form {
 }
 
 export default function StatusForm() {
-  const setTodoStatus = useSetRecoilState(todoStatusState);
+  const setTodoStatus = useSetRecoilState(statusesState);
   const { register, handleSubmit, setValue } = useForm<Form>();
   const handleValid = ({ newStatus }: Form) => {
     setTodoStatus((prevStatus) => [...prevStatus, newStatus]);

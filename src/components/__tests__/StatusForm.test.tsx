@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { RecoilRoot, useRecoilValue } from 'recoil';
 import { act } from 'react-dom/test-utils';
-import { todoStatusState, defaultStatus } from '@/recoil/atoms';
+import { statusesState, defaultStatus } from '@/recoil/atoms';
 import StatusForm from '../StatusForm';
 
 interface ObserverProps {
-  node: typeof todoStatusState;
+  node: typeof statusesState;
   onChange: (value: string[]) => void;
 }
 
@@ -19,7 +19,7 @@ const RecoilObserver = ({ node, onChange }: ObserverProps) => {
 function renderStatusForm(onChange: ObserverProps['onChange']) {
   render(
     <RecoilRoot>
-      <RecoilObserver node={todoStatusState} onChange={onChange} />
+      <RecoilObserver node={statusesState} onChange={onChange} />
       <StatusForm />
     </RecoilRoot>
   );

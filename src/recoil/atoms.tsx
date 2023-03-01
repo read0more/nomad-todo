@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import * as localStorageUtil from '@/localStorageUtil';
 
 export const defaultStatus = ['할 일', '하는중', '완료'] as const;
 export interface Todo {
@@ -8,11 +9,25 @@ export interface Todo {
 }
 
 export const todoState = atom<Todo[]>({
-  key: 'todo',
+  key: 'todos',
   default: [],
+  effects: [
+    ({ onSet }) => {
+      onSet((newValue) => {
+        localStorageUtil.set<Todo[]>('todos', newValue);
+      });
+    },
+  ],
 });
 
-export const todoStatusState = atom<string[]>({
-  key: 'todoStatus',
+export const statusesState = atom<string[]>({
+  key: 'statuses',
   default: [...defaultStatus],
+  effects: [
+    ({ onSet }) => {
+      onSet((newValue) => {
+        localStorageUtil.set<string[]>('statuses', newValue);
+      });
+    },
+  ],
 });

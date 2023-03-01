@@ -1,10 +1,10 @@
 import React from 'react';
-import { todoState, todoStatusState } from '@/recoil/atoms';
+import { todoState, statusesState } from '@/recoil/atoms';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 export default function TodoList() {
   const [todos, setTodos] = useRecoilState(todoState);
-  const statuses = useRecoilValue(todoStatusState);
+  const statuses = useRecoilValue(statusesState);
   const handleStatusChange = (id: number, newStatus: string) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) => {
