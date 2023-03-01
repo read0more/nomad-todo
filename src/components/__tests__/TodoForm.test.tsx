@@ -16,7 +16,7 @@ const RecoilObserver = ({ node, onChange }: ObserverProps) => {
   return null;
 };
 
-function renderTodoForm(onChange: (value: Todo[]) => void) {
+function renderTodoForm(onChange: ObserverProps['onChange']) {
   render(
     <RecoilRoot>
       <RecoilObserver node={todoState} onChange={onChange} />
