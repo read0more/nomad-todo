@@ -5,6 +5,21 @@ import TodoList from './components/TodoList';
 import * as localStorageUtil from '@/localStorageUtil';
 import { useSetRecoilState } from 'recoil';
 import { statusesState, Todo, todoState } from './recoil/atoms';
+import styled from 'styled-components';
+import StatusTabs from './components/StatusTabs';
+
+const Container = styled.main`
+  margin: auto;
+  max-width: 1024px;
+`;
+
+const Title = styled.h1`
+  padding-top: 1em;
+  margin: auto;
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+`;
 
 function App() {
   const setTodos = useSetRecoilState(todoState);
@@ -24,11 +39,13 @@ function App() {
   }, []);
 
   return (
-    <>
+    <Container>
+      <Title>Todo</Title>
+      <StatusTabs />
       <TodoForm />
       <StatusForm />
       <TodoList />
-    </>
+    </Container>
   );
 }
 

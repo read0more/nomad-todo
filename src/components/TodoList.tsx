@@ -1,9 +1,10 @@
 import React from 'react';
-import { todoState, statusesState } from '@/recoil/atoms';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { todoState, statusesState, filteredTodoState } from '@/recoil/atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import Button from './Button';
 
 export default function TodoList() {
-  const [todos, setTodos] = useRecoilState(todoState);
+  const setTodos = useSetRecoilState(todoState);
   const statuses = useRecoilValue(statusesState);
   const handleStatusChange = (id: number, newStatus: string) => {
     setTodos((prevTodos) =>
@@ -17,19 +18,19 @@ export default function TodoList() {
   return (
     <>
       <ul>
-        {todos.map((todo) => (
+        {useRecoilValue(filteredTodoState).map((todo) => (
           <li key={todo.id}>
             <span>{todo.text}</span>
             <span> / {todo.status}</span>
             {statuses
               .filter((status) => status !== todo.status)
               .map((status) => (
-                <button
+                <Button
                   key={status}
                   onClick={() => handleStatusChange(todo.id, status)}
                 >
                   {status}
-                </button>
+                </Button>
               ))}
           </li>
         ))}
