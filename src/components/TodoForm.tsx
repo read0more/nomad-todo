@@ -1,5 +1,5 @@
 import React from 'react';
-import { status, StatusType, todoState } from '../recoil/atoms';
+import { defaultStatus, StatusType, todoState } from '../recoil/atoms';
 import { useSetRecoilState } from 'recoil';
 import { useForm } from 'react-hook-form';
 
@@ -26,9 +26,9 @@ export default function TodoForm() {
   return (
     <form onSubmit={handleSubmit(handleValid)}>
       <select {...register('selectedStatus')}>
-        {Object.entries(status).map(([key, value]) => (
-          <option key={key} value={key}>
-            {value}
+        {defaultStatus.map((status) => (
+          <option key={status} value={status}>
+            {status}
           </option>
         ))}
       </select>

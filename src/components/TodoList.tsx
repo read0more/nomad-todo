@@ -1,5 +1,5 @@
 import React from 'react';
-import { status, StatusType, todoState } from '@/recoil/atoms';
+import { defaultStatus, StatusType, todoState } from '@/recoil/atoms';
 import { useRecoilState } from 'recoil';
 
 export default function TodoList() {
@@ -20,17 +20,16 @@ export default function TodoList() {
           <li key={todo.id}>
             <span>{todo.text}</span>
             <span> / {todo.status}</span>
-            {Object.entries(status).map(([key, value]) => {
-              if (value === status[todo.status]) return <></>;
-              return (
+            {defaultStatus
+              .filter((status) => status !== todo.status)
+              .map((status) => (
                 <button
-                  key={key}
-                  onClick={() => handleStatusChange(todo.id, key as StatusType)}
+                  key={status}
+                  onClick={() => handleStatusChange(todo.id, status)}
                 >
-                  {value}
+                  {status}
                 </button>
-              );
-            })}
+              ))}
           </li>
         ))}
       </ul>

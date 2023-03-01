@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Todo, todoState, status, StatusType } from '@/recoil/atoms';
+import { Todo, todoState, StatusType } from '@/recoil/atoms';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { RecoilRoot, useRecoilState } from 'recoil';
 import TodoList from '../TodoList';
@@ -9,17 +9,17 @@ const fakeTodos: Todo[] = [
   {
     id: 1,
     text: 'fake1',
-    status: 'todo',
+    status: '할 일',
   },
   {
     id: 2,
     text: 'fake2',
-    status: 'doing',
+    status: '하는중',
   },
   {
     id: 3,
     text: 'fake3',
-    status: 'done',
+    status: '완료',
   },
 ];
 
@@ -63,7 +63,7 @@ describe('todo 상태 변경', () => {
 
     act(() => {
       const button = screen.getByRole('button', {
-        name: status[newStatus],
+        name: newStatus,
       });
       fireEvent.click(button);
     });
@@ -78,14 +78,14 @@ describe('todo 상태 변경', () => {
   }
 
   it('하는중으로 변경', () => {
-    run(fakeTodos[0], 'doing');
+    run(fakeTodos[0], '하는중');
   });
 
   it('완료로 변경', () => {
-    run(fakeTodos[0], 'done');
+    run(fakeTodos[0], '완료');
   });
 
   it('할 일로 변경', () => {
-    run(fakeTodos[1], 'todo');
+    run(fakeTodos[1], '할 일');
   });
 });

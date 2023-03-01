@@ -52,14 +52,14 @@ describe('등록한 todo가 선택한 셀렉트박스의 값의 상태를 가짐
   }
 
   it('todo 상태로 등록', async () => {
-    await run('todo');
+    await run('할 일');
   });
 
   it('doing 상태로 등록', async () => {
-    await run('doing');
+    await run('하는중');
   });
 
   it('done 상태로 등록', async () => {
-    await run('done');
+    await run('완료');
   });
 });
