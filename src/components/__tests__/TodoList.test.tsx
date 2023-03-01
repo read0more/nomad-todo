@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
-import { Todo, todoState } from '@/recoil/atoms';
-import { render, screen } from '@testing-library/react';
-import { RecoilRoot, useSetRecoilState } from 'recoil';
+import { Todo, todoState, status, StatusType } from '@/recoil/atoms';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { RecoilRoot, useRecoilState } from 'recoil';
 import TodoList from '../TodoList';
-
-interface ObserverProps {
-  node: typeof todoState;
-}
+import { act } from 'react-dom/test-utils';
 
 const fakeTodos: Todo[] = [
   {
@@ -26,23 +23,69 @@ const fakeTodos: Todo[] = [
   },
 ];
 
-const RecoilObserver = ({ node }: ObserverProps) => {
-  const set = useSetRecoilState(node);
+interface ObserverProps {
+  node: typeof todoState;
+  todos: Todo[];
+  onChange: (value: Todo[]) => void;
+}
+
+const RecoilObserver = ({ node, todos, onChange }: ObserverProps) => {
+  const [value, setValue] = useRecoilState(node);
   useEffect(() => {
-    set(fakeTodos);
+    setValue(todos);
   }, []);
+  useEffect(() => onChange(value), [onChange, value]);
   return null;
 };
 
 it('state에 있는 todo들 출력', () => {
   render(
     <RecoilRoot>
-      <RecoilObserver node={todoState} />
+      <RecoilObserver node={todoState} todos={fakeTodos} onChange={() => {}} />
       <TodoList />
     </RecoilRoot>
   );
 
   fakeTodos.forEach((todo) => {
     expect(screen.getByText(todo.text)).toBeInTheDocument();
+  });
+});
+
+describe('todo 상태 변경', () => {
+  function run(todo: Todo, newStatus: StatusType) {
+    const onChange = vi.fn();
+    render(
+      <RecoilRoot>
+        <RecoilObserver node={todoState} todos={[todo]} onChange={onChange} />
+        <TodoList />
+      </RecoilRoot>
+    );
+
+    act(() => {
+      const button = screen.getByRole('button', {
+        name: status[newStatus],
+      });
+      fireEvent.click(button);
+    });
+
+    expect(onChange).toBeCalledWith([
+      {
+        id: expect.any(Number),
+        text: todo.text,
+        status: newStatus,
+      },
+    ]);
+  }
+
+  it('하는중으로 변경', () => {
+    run(fakeTodos[0], 'doing');
+  });
+
+  it('완료로 변경', () => {
+    run(fakeTodos[0], 'done');
+  });
+
+  it('할 일로 변경', () => {
+    run(fakeTodos[1], 'todo');
   });
 });
