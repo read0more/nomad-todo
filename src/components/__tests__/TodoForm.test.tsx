@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { RecoilRoot, useRecoilValue } from 'recoil';
 import { act } from 'react-dom/test-utils';
-import { todoState, Todo, StatusType } from '@/recoil/atoms';
+import { todoState, Todo } from '@/recoil/atoms';
 import TodoForm from '../TodoForm';
 
 interface ObserverProps {
@@ -26,7 +26,7 @@ function renderTodoForm(onChange: (value: Todo[]) => void) {
 }
 
 describe('등록한 todo가 선택한 셀렉트박스의 값의 상태를 가짐', () => {
-  async function run(status: StatusType) {
+  async function run(status: string) {
     const onChange = vi.fn();
     renderTodoForm(onChange);
 

@@ -1,10 +1,11 @@
 import React from 'react';
-import { defaultStatus, StatusType, todoState } from '@/recoil/atoms';
-import { useRecoilState } from 'recoil';
+import { todoState, todoStatusState } from '@/recoil/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 export default function TodoList() {
   const [todos, setTodos] = useRecoilState(todoState);
-  const handleStatusChange = (id: number, newStatus: StatusType) => {
+  const statuses = useRecoilValue(todoStatusState);
+  const handleStatusChange = (id: number, newStatus: string) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) => {
         if (todo.id === id) return { ...todo, status: newStatus };
@@ -20,7 +21,7 @@ export default function TodoList() {
           <li key={todo.id}>
             <span>{todo.text}</span>
             <span> / {todo.status}</span>
-            {defaultStatus
+            {statuses
               .filter((status) => status !== todo.status)
               .map((status) => (
                 <button

@@ -1,14 +1,15 @@
 import React from 'react';
-import { defaultStatus, StatusType, todoState } from '../recoil/atoms';
-import { useSetRecoilState } from 'recoil';
+import { todoState, todoStatusState } from '../recoil/atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useForm } from 'react-hook-form';
 
 interface Form {
-  selectedStatus: StatusType;
+  selectedStatus: string;
   todo: string;
 }
 
 export default function TodoForm() {
+  const statuses = useRecoilValue(todoStatusState);
   const setTodos = useSetRecoilState(todoState);
   const { register, handleSubmit, setValue } = useForm<Form>();
   const handleValid = ({ selectedStatus, todo }: Form) => {
@@ -26,7 +27,7 @@ export default function TodoForm() {
   return (
     <form onSubmit={handleSubmit(handleValid)}>
       <select {...register('selectedStatus')}>
-        {defaultStatus.map((status) => (
+        {statuses.map((status) => (
           <option key={status} value={status}>
             {status}
           </option>

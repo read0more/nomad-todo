@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Todo, todoState, StatusType } from '@/recoil/atoms';
+import { Todo, todoState } from '@/recoil/atoms';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { RecoilRoot, useRecoilState } from 'recoil';
 import TodoList from '../TodoList';
@@ -52,7 +52,7 @@ it('state에 있는 todo들 출력', () => {
 });
 
 describe('todo 상태 변경', () => {
-  function run(todo: Todo, newStatus: StatusType) {
+  function run(todo: Todo, newStatus: string) {
     const onChange = vi.fn();
     render(
       <RecoilRoot>
